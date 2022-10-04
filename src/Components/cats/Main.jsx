@@ -7,7 +7,7 @@ import Edit from "./Edit";
 
 function Main() {
 
-    const [lastUpdate, setLastUpdate] = useState(Date.now);
+    const [lastUpdate, setLastUpdate] = useState(Date.now());
     const [createData, setCreateData] = useState(null);
     const [cats, setCats] = useState(null);
     const [deleteData, setDeleteData] = useState(null);

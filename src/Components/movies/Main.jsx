@@ -2,8 +2,8 @@ import { useState, useEffect } from "react";
 import Movies from "../../Contexts/Movies";
 import Create from "./Create";
 import axios from 'axios';
-// import List from "./List";
-// import Edit from "./Edit";
+import List from "./List";
+import Edit from "./Edit";
 
 function Main() {
 
@@ -18,12 +18,20 @@ function Main() {
 
   //READ for SELECT
   useEffect(() => {
-    //nuskaitau is supplier's duomenis; suppliers perduodu i consumeriu provideri, ir juos pasiimu CREAT'e.jsx
   axios.get('http://localhost:3003/server/cats')
   .then(res => {
     setCats(res.data);
   })
   }, []);
+
+  //READ for LIST
+  useEffect(() => {
+    axios.get('http://localhost:3003/server/movies')
+        .then(res => {
+            setMovies(res.data);
+        })
+}, [lastUpdate]);
+  
 
 //CREATE
   useEffect(() => {
@@ -63,8 +71,6 @@ useEffect(() => {
 },[editData])
 
 
-
-
   return (
     <Movies.Provider value={{
         setCreateData,
@@ -82,11 +88,11 @@ useEffect(() => {
             <Create />
           </div>
           <div className="col-8">
-            {/* <List /> */}
+            <List />
           </div>
         </div>
       </div>
-      {/* <Edit /> */}
+      <Edit />
     </Movies.Provider>
   );
 }
