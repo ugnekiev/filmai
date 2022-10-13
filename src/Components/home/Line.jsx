@@ -4,16 +4,28 @@ import Home from '../../Contexts/Home';
 
 function Line({ movie }) {
 
-    const { setRateData } = useContext(Home);
+    const { setRateData, setMovies, filterOn, filterWhat } = useContext(Home);
     const [rate, setRate] = useState(5);
     
 
     const doRating = () => {
+        console.log('rate=>',rate)
         setRateData({
             id: movie.id,
             rate
         });
         setRate(5);
+    }
+//(at)filtravimas pagal kategorijas: Main.jsx yra useRef
+    const filter = () => {
+        if (filterOn.current) {
+            setMovies(m => m.map(mo => ({ ...mo, show: true })));
+            filterWhat.current = null;
+        }else {
+            setMovies(m => m.map(mo => mo.cat_id === movie.cat_id ? {...mo, show: true} : {...mo, show: false}));
+            filterWhat.current = movie.cat_id;
+        }
+        filterOn.current = !filterOn.current;
     }
 
     return (
@@ -31,7 +43,7 @@ function Line({ movie }) {
                         {movie.price} Eur
                     </div>
 
-                    <div className="home__content__cat">
+                    <div className="home__content__cat click-link" onClick={filter}>
                         {movie.catTitle}
                     </div>
                     <div className="home__content__info">
