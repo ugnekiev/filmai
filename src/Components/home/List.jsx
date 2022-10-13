@@ -19,6 +19,15 @@ function List() {
     const { movies, setMovies } = useContext(Home);
 
     const [sortBy, setSortBy] = useState('default');
+    const [stats, setStats] = useState({movieCount: null});
+
+    useEffect(() => {
+        if (null === movies) {
+            return;
+        }
+        setStats(s => ({...s, movieCount: movies.length}))
+
+    }, [movies])
 
     useEffect(() => {
         switch (sortBy) {
@@ -59,7 +68,7 @@ function List() {
                 </div>
             </div>
             <div className="card m-4">
-                <h5 className="card-header">Movies List</h5>
+                <h5 className="card-header">Movies List ({stats.movieCount})</h5>
                 <div className="card-body">
                     <ul className="list-group">
                         {
